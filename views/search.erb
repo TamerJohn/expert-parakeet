@@ -1,0 +1,32 @@
+<div class="content">
+  <h2 class="content-subhead">Search</h2>
+
+  <form action="/search" method="get">
+    <input name="query" value="<%= params[:query] %>">
+    <button type="submit">Search</button>
+  </form>
+
+  <% if result_found? %>
+    <h2>Results for '<% @query %>'</h2>
+    <ul>
+      <% @results.each do |result|%>
+        <li>
+          <h4><%= result[:chapter_name] %></h4>
+          <ul>
+            <% result[:pargraph_nums].each do |paragraph_num| %>
+              <li>
+                <a href="/chapter/<%= result[:chapter_number]%>#<%= paragraph_num %>">
+                  <%= generate_query_paragraph(result[:chapter_number], paragraph_num, params[:query]) %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <%end%>
+    </ul>
+
+  <% elsif @query %>
+      <p>Sorry, no matches were found</p>
+  <% else %>
+  <% end %>
+  </div>
